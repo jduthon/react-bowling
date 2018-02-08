@@ -1,0 +1,20 @@
+.frame {
+  border: solid 1px;
+  border-right: none;
+  &:last-child {
+    border-right: solid 1px;
+  }
+}
+
+.frame__rolls {
+  display: flex;
+  margin-bottom: 8px;
+}
+
+.frame__roll {
+  padding: 5px 8px;
+  &:last-child {
+    border-bottom: solid 1px;
+    border-left: solid 1px;
+  }
+}
