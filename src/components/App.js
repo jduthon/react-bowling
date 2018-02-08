@@ -1,28 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { flatten, sum } from '../utils/array';
+import { gameSelector } from '../redux/selectors';
 
 import ScoreRow from './ScoreRow';
+import RandomButton from './RandomButton';
 
 import './App.css';
 
-const fakeRolls = new Array(10).fill([5, 3]);
+const framesWithEmpty = frames => [
+  ...frames,
+  ...new Array(10 - frames.length).fill({ rolls: [] }),
+];
 
-const fakeState = {
-  frames: fakeRolls.map((rolls, i) => ({
-    rolls,
-    score: sum(flatten(fakeRolls.slice(0, i + 1))),
-  })),
-};
+const App = ({ game }) => (
+  <div className="App">
+    <ScoreRow frames={framesWithEmpty(game.frames)} />
+    <RandomButton />
+  </div>
+);
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <ScoreRow frames={fakeState.frames} />
-      </div>
-    );
-  }
-}
+const mapStateToProps = state => ({
+  game: gameSelector(state),
+});
 
-export default App;
+export default connect(mapStateToProps)(App);

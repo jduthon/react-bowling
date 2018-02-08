@@ -8,7 +8,6 @@ import { framePropTypes } from '../propTypes';
 import './Frame.css';
 
 const Frame = ({ frame }) => {
-  let frameDisplay;
   const { rolls, score } = frame;
   const isStrike = frameIsStrike(frame);
   const isSpare = frameIsSpare(frame);

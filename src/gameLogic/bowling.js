@@ -7,8 +7,8 @@ import {
   frameIsFull,
 } from './frame';
 
-export const roll = (state, roll) => {
-  const frames = [...state.frames];
+export const roll = (previousFrames, roll) => {
+  const frames = [...previousFrames];
   let currentFrame = frames.pop() || getEmptyFrame();
   if (frameIsFull(currentFrame)) {
     frames.push(currentFrame);
@@ -24,8 +24,10 @@ export const roll = (state, roll) => {
   }
   currentFrame.rolls.push(roll);
   currentFrame.score = lastFrame.score + sum(currentFrame.rolls);
-  return {
-    ...state,
-    frames: [...frames, currentFrame],
-  };
+  return [...frames, currentFrame];
+};
+
+export const isGameEnd = frames => {
+  const lastFrame = last(frames);
+  return frames.length === 10 && frameIsFull(lastFrame);
 };
