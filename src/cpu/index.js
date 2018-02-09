@@ -1,1 +1,1 @@
-export const getRandomRoll = () => Math.round(Math.random() * 10);
+export const getRandomRoll = (max = 10) => Math.round(Math.random() * max);
