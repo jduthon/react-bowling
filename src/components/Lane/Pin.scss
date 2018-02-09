@@ -1,0 +1,33 @@
+@import 'vars.scss';
+
+$top-pin-size: 15px;
+$top-pin-width: 40%;
+
+.pin {
+  position: relative;
+  height: 25px;
+  width: $pin-width;
+  border-radius: 100% 100% 80% 80%;
+  background-color: white;
+  margin-top: $top-pin-size;
+  box-shadow: 2px 0 4px black;
+  &:before,
+  &:after {
+    position: absolute;
+    content: '';
+    left: (100% - $top-pin-width) / 2;
+    width: $top-pin-width;
+  }
+  &:before {
+    top: -$top-pin-size * 0.8;
+    height: $top-pin-size;
+    border-radius: 50% 50% 0 0;
+    background-color: white;
+    box-shadow: 1px 0 2px black;
+  }
+  &:after {
+    top: 0;
+    height: 2px;
+    background-color: red;
+  }
+}

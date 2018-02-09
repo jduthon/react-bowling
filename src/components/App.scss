@@ -1,1 +1,19 @@
+@import 'vars.scss';
 
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  max-width: 800px;
+  background-color: $dark-color;
+  font-family: 'Nixie One';
+}
+
+.throw-area {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  button {
+    margin: 10px;
+  }
+}

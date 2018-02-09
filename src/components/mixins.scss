@@ -1,0 +1,11 @@
+@import 'vars.scss';
+
+@mixin neon-effect($vertical: 2px, $horizontal: 2px, $diffuse: 8px) {
+  box-shadow: -#{$vertical} -#{$horizontal} $diffuse $light-color,
+    $vertical $horizontal $diffuse $light-color;
+}
+
+@mixin text-neon() {
+  text-shadow: 0 0 0.2em lighten($light-color, 0.7),
+    0 0 0.4em lighten($light-color, 0.4);
+}

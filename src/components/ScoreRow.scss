@@ -1,3 +1,7 @@
+@import 'vars.scss';
+
 .score-row {
   display: flex;
+  color: $light-color;
+  margin: 10px;
 }

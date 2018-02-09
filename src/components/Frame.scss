@@ -1,6 +1,16 @@
+@import 'vars.scss';
+@import 'mixins.scss';
+
 .frame {
   border: solid 1px;
   border-right: none;
+  height: 50px;
+  width: 50px;
+  @include neon-effect();
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  @include text-neon();
   &:last-child {
     border-right: solid 1px;
   }
@@ -12,9 +22,14 @@
 }
 
 .frame__roll {
-  padding: 5px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 25px;
+  width: 25px;
   &:last-child {
     border-bottom: solid 1px;
     border-left: solid 1px;
+    @include neon-effect(1px, 1px, 4px);
   }
 }

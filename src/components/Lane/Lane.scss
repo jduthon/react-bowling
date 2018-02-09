@@ -1,0 +1,78 @@
+@import 'vars.scss';
+@import '../vars.scss';
+
+$pin-margin: 5px;
+$hole-top: 50px;
+$hole-height: 50px;
+$hole-width: ($pin-width + $pin-margin) * 8;
+$lane-height: 400px;
+
+.lane {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at 50% 35%,
+    $light-color 0%,
+    $dark-color 60%
+  );
+  height: $lane-height;
+  width: 100%;
+  &:before {
+    $color: fade_out(#d7c1c5, 0.1);
+    $top: $hole-top + $hole-height;
+    position: absolute;
+    content: '';
+    top: $top;
+    bottom: 0;
+    width: $hole-width;
+    border-bottom: $lane-height - $top solid $color;
+    border-left: $lane-height - $top solid transparent;
+    border-right: $lane-height - $top solid transparent;
+    height: 0;
+  }
+}
+
+@mixin position-pins($first, $last, $other-transform: '', $margin: $pin-margin) {
+  @for $i from $first through $last {
+    &:nth-child(#{$i}) {
+      transform: translateX(calc((100% + #{$margin}) * (#{$i - $first}))) #{$other-transform};
+    }
+  }
+}
+
+.lane__hole {
+  width: $hole-width;
+  position: absolute;
+  top: $hole-top;
+  height: $hole-height;
+  border: solid 1px;
+  background: linear-gradient(
+    180deg,
+    #58488f,
+    #fbfbfb 8%,
+    #01106e 12%,
+    #010a4a
+  );
+  background-color: black;
+  .pin {
+    $vertical-offset: 50%;
+    $horizontal-offset: $pin-width + $pin-margin;
+    $vertical-margin: 15px;
+    position: absolute;
+    &:nth-child(10) {
+      top: calc(#{$vertical-offset} + #{$vertical-margin * 2.2});
+      left: calc(#{$horizontal-offset} + 40px);
+    }
+    &:nth-child(-n + 9) {
+      top: calc(#{$vertical-offset} + #{$vertical-margin});
+      left: calc(#{$horizontal-offset} + 25px);
+    }
+    &:nth-child(-n + 6) {
+      top: $vertical-offset;
+      left: $horizontal-offset;
+    }
+    @include position-pins(1, 6);
+    @include position-pins(7, 9, 'scale(1.05)');
+  }
+}

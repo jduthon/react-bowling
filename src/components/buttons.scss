@@ -1,0 +1,12 @@
+@import 'vars.scss';
+@import 'mixins.scss';
+
+.neon-button {
+  background-color: $dark-color;
+  color: $light-color;
+  border: solid 1px;
+  @include neon-effect();
+  @include text-neon();
+  font-size: 28px;
+  border-radius: 4px;
+}
