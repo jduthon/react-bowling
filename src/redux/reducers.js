@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux';
 
 import { roll, isGameEnd } from '../gameLogic/bowling';
-import { ROLL } from './actions';
+import { ROLL, RESET } from './actions';
 
-const game = (state = { frames: [] }, action) => {
+const initialState = {
+  frames: [],
+};
+
+const game = (state = initialState, action) => {
   if (action.type === ROLL) {
     const { frames } = state;
     const nextState = {
@@ -17,6 +21,11 @@ const game = (state = { frames: [] }, action) => {
       nextState.end = true;
     }
     return nextState;
+  }
+  if (action.type === RESET) {
+    return {
+      ...initialState,
+    };
   }
   return state;
 };

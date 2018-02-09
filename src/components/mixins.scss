@@ -1,8 +1,30 @@
 @import 'vars.scss';
 
 @mixin neon-effect($vertical: 2px, $horizontal: 2px, $diffuse: 8px) {
-  box-shadow: -#{$vertical} -#{$horizontal} $diffuse $light-color,
-    $vertical $horizontal $diffuse $light-color;
+  animation: 5s linear infinite alternate neon_box_shadow_anim;
+  /*box-shadow: -#{$vertical} -#{$horizontal} $diffuse $light-color,
+    $vertical $horizontal $diffuse $light-color;*/
+}
+
+@keyframes neon_box_shadow_anim {
+  0% {
+    box-shadow: 0 0 0 $light-color;
+  }
+  40% {
+    box-shadow: -2px -2px 8px $light-color;
+  }
+  60% {
+    box-shadow: 0 0 0 $light-color;
+  }
+  70% {
+    box-shadow: -2px -2px 8px $light-color, 2px 2px 8px $light-color;
+  }
+  90% {
+    box-shadow: 2px 2px 8px $light-color;
+  }
+  100% {
+    box-shadow: 0 0 0 $light-color;
+  }
 }
 
 @mixin text-neon() {
