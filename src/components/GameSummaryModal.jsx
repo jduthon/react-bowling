@@ -3,14 +3,18 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { reset } from '../redux/actions';
-import { scoreSelector } from '../redux/selectors';
+import { scoresSelector } from '../redux/selectors';
 
 import './GameSummaryModal.css';
 
-const GameSummaryModal = ({ reset, score }) => (
+const GameSummaryModal = ({ reset, scores }) => (
   <div className="game-summary">
-    <h2 className="game-summary__title">Game done!</h2>
-    <div className="game-summary__score">Your score: {score}</div>
+    <h2 className="game-summary__title">Game end!</h2>
+    {scores.map(({ name, score }, i) => (
+      <div className="game-summary__score" key={i}>
+        {`${name}'s score: ${score}`}
+      </div>
+    ))}
     <button className="game-summary__reset neon-button" onClick={reset}>
       New game
     </button>
@@ -18,12 +22,12 @@ const GameSummaryModal = ({ reset, score }) => (
 );
 
 GameSummaryModal.propTypes = {
-  resetGame: PropTypes.func.isRequired,
-  score: PropTypes.number.isRequired,
+  reset: PropTypes.func.isRequired,
+  scores: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 const mapStateToProps = state => ({
-  score: scoreSelector(state),
+  scores: scoresSelector(state),
 });
 
 const mapDispatchToProps = {

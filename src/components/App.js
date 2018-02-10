@@ -1,39 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
-import { last, sum } from '../utils/array';
-import { gameSelector, currentFrameSelector } from '../redux/selectors';
-import { frameIsFull, getEmptyFrame } from '../gameLogic/frame';
+import { gameEndSelector, playersSetSelector } from '../redux/selectors';
 
-import ScoreRow from './ScoreRow';
-import RandomButton from './RandomButton';
-import Lane from './Lane';
+import PlayersForm from './PlayersForm';
+import Game from './Game';
 import GameSummaryModal from './GameSummaryModal';
 
 import './App.css';
 
-const framesWithEmpty = frames => [
-  ...frames,
-  ...new Array(10 - frames.length).fill({ rolls: [] }),
-];
-
-const App = ({ game: { frames, end }, currentFrame }) => {
-  const pinsNumber = 10 - sum(currentFrame.rolls);
+const App = ({ end, playersSet }) => {
   return (
     <div className="app">
-      <ScoreRow frames={framesWithEmpty(frames)} />
-      <Lane pinsNumber={pinsNumber} />
-      <div className="throw-area">
-        <RandomButton pinsNumber={pinsNumber} disabled={end} />
-      </div>
+      {!playersSet && <PlayersForm />}
+      {playersSet && <Game />}
       {end && <GameSummaryModal />}
     </div>
   );
 };
 
 const mapStateToProps = state => ({
-  game: gameSelector(state),
-  currentFrame: currentFrameSelector(state),
+  end: gameEndSelector(state),
+  playersSet: playersSetSelector(state),
 });
 
 export default connect(mapStateToProps)(App);

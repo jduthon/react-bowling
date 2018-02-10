@@ -1,0 +1,26 @@
+@import 'vars.scss';
+@import 'mixins.scss';
+
+.players-form {
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  > * {
+    margin: 5px 0;
+  }
+}
+
+.players-form__field {
+  border: solid 1px;
+  color: $light-color;
+  background-color: lighten($dark-color, 10);
+  border-radius: 8px;
+  padding: 8px;
+  font-size: 16px;
+  @include neon-effect();
+}
+
+.players-form__submit {
+  width: 100%;
+}

@@ -1,0 +1,10 @@
+@import '../vars.scss';
+
+.throw-area {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  button {
+    margin: 10px;
+  }
+}

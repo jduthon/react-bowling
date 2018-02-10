@@ -1,0 +1,17 @@
+@import '../vars.scss';
+
+.score-row {
+  display: flex;
+  color: $light-color;
+  margin: 10px;
+  align-items: center;
+}
+
+.score-row__frames {
+  display: flex;
+}
+
+.score-row__player-name {
+  font-size: 20px;
+  margin: 0 10px;
+}
