@@ -20,6 +20,13 @@ export const roll = (previousFrames, roll) => {
   const isDoubleScore =
     lastIsStrike || (lastIsSpare && frameIsEmpty(currentFrame));
   if (isDoubleScore) {
+    if (lastIsStrike) {
+      const lastLastFrame = frames[frames.length - 2] || getEmptyFrame();
+      if (frameIsStrike(lastLastFrame)) {
+        lastLastFrame.score += roll;
+        lastFrame.score += roll;
+      }
+    }
     lastFrame.score += roll;
   }
   currentFrame.rolls.push(roll);
