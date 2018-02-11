@@ -41,10 +41,11 @@ class PlayersForm extends React.Component {
     e.preventDefault();
   };
 
-  handleSubmit = () => {
+  handleSubmit = e => {
     const { setPlayers } = this.props;
     const { players } = this.state;
     setPlayers(players);
+    e.preventDefault();
   };
 
   render() {
