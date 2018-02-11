@@ -23,7 +23,12 @@ const GameSummaryModal = ({ reset, scores }) => (
 
 GameSummaryModal.propTypes = {
   reset: PropTypes.func.isRequired,
-  scores: PropTypes.arrayOf(PropTypes.number).isRequired,
+  scores: PropTypes.arrayOf(
+    PropTypes.shape({
+      score: PropTypes.number,
+      playerName: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 const mapStateToProps = state => ({

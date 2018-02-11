@@ -7,12 +7,15 @@ import {
   currentGameSelector,
   currentFrameSelector,
   currentPlayerNameSelector,
+  previousGameSelector,
+  previousFrameSelector,
 } from '../../redux/selectors';
 import { roll } from '../../redux/actions';
 import {
   frameIsFull,
   getEmptyFrame,
   frameIsEmpty,
+  framesEqual,
 } from '../../gameLogic/frame';
 
 import { gamePropTypes, framePropTypes } from './propTypes';
@@ -51,7 +54,13 @@ class Game extends React.Component {
   }
 
   componentWillUpdate(props, state) {
-    const { currentFrame, playerName, game } = props;
+    const {
+      currentFrame,
+      playerName,
+      game,
+      previousFrame,
+      previousGame,
+    } = props;
     const { processing, currentFrame: nextFrame } = state;
     const { currentFrame: prevFrame, playerName: prevPlayer } = this.props;
     const playerChanged = playerName !== prevPlayer;
@@ -62,6 +71,8 @@ class Game extends React.Component {
     if (playerChanged || frameGotFull) {
       this.setState({
         processing: true,
+        game: previousGame,
+        currentFrame: previousFrame,
       });
       window.setTimeout(() => {
         this.setState({
@@ -71,7 +82,7 @@ class Game extends React.Component {
           processing: false,
         });
       }, 1000);
-    } else if (currentFrame.score !== prevFrame.score) {
+    } else if (!framesEqual(currentFrame, prevFrame)) {
       this.setState({
         currentFrame,
         game,
@@ -119,6 +130,8 @@ class Game extends React.Component {
 const mapStateToProps = state => ({
   game: currentGameSelector(state),
   currentFrame: currentFrameSelector(state),
+  previousGame: previousGameSelector(state),
+  previousFrame: previousFrameSelector(state),
   playerName: currentPlayerNameSelector(state),
 });
 

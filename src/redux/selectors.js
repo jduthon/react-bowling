@@ -30,12 +30,26 @@ export const currentGameSelector = createSelector(
   (playersGame, currentPlayerIndex) => playersGame[currentPlayerIndex]
 );
 
+const getLastFrameIfExists = ({ frames = [] } = {}) => {
+  const lastFrame = last(frames);
+  return !lastFrame ? getEmptyFrame() : lastFrame;
+};
+
 export const currentFrameSelector = createSelector(
   currentGameSelector,
-  ({ frames }) => {
-    const lastFrame = last(frames);
-    return !lastFrame ? getEmptyFrame() : lastFrame;
-  }
+  getLastFrameIfExists
+);
+
+export const previousGameSelector = createSelector(
+  playersGameSelector,
+  currentPlayerIndexSelector,
+  (playersGame, currentPlayerIndex) =>
+    playersGame[(currentPlayerIndex || playersGame.length) - 1]
+);
+
+export const previousFrameSelector = createSelector(
+  previousGameSelector,
+  getLastFrameIfExists
 );
 
 export const currentPlayerNameSelector = createSelector(
