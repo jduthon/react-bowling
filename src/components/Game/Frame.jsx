@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { frameIsSpare, frameIsStrike } from '../../gameLogic/frame';
 
-import { framePropTypes } from '../../propTypes';
+import { framePropTypes } from './propTypes';
 
 import './Frame.css';
 

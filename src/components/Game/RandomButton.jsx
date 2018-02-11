@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { connect } from 'react-redux';
 
 import { omitKeys } from '../../utils/object';
 
-import { roll } from '../../redux/actions';
 import { getRandomRoll } from '../../cpu';
 
 import './RandomButton.css';
 
 class RandomButton extends React.Component {
   randomRoll = () => {
-    const { roll, pinsNumber, disabled } = this.props;
+    const { pinsNumber, disabled, onClick } = this.props;
     if (!disabled) {
-      roll(getRandomRoll(pinsNumber));
+      onClick(getRandomRoll(pinsNumber));
     }
   };
 
@@ -25,8 +23,8 @@ class RandomButton extends React.Component {
         className={cx('neon-button', 'random-button', {
           'random-button--disabled': disabled,
         })}
+        {...omitKeys(this.props, ['pinsNumber'])}
         onClick={this.randomRoll}
-        {...omitKeys(this.props, ['roll', 'pinsNumber'])}
       >
         Roll!
       </button>
@@ -34,12 +32,8 @@ class RandomButton extends React.Component {
   }
 }
 
-const mapDispatchToProps = {
-  roll,
-};
-
 RandomButton.propTypes = {
-  roll: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
   pinsNumber: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
 };
@@ -48,4 +42,4 @@ RandomButton.defaultProps = {
   disabled: false,
 };
 
-export default connect(null, mapDispatchToProps)(RandomButton);
+export default RandomButton;

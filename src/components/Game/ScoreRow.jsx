@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Frame from './Frame';
-import { framePropTypes } from '../../propTypes';
+import { framePropTypes } from './propTypes';
 
 import './ScoreRow.css';
 

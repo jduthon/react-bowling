@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { last } from '../utils/array';
-import { frameIsFull, getEmptyFrame } from '../gameLogic/frame';
+import { getEmptyFrame } from '../gameLogic/frame';
 
 export const gameSelector = ({ game }) => game;
 
@@ -34,7 +34,7 @@ export const currentFrameSelector = createSelector(
   currentGameSelector,
   ({ frames }) => {
     const lastFrame = last(frames);
-    return !lastFrame || frameIsFull(lastFrame) ? getEmptyFrame() : lastFrame;
+    return !lastFrame ? getEmptyFrame() : lastFrame;
   }
 );
 

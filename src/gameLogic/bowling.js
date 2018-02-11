@@ -30,7 +30,7 @@ export const roll = (previousFrames, roll) => {
     lastFrame.score += roll;
   }
   currentFrame.rolls.push(roll);
-  currentFrame.score = lastFrame.score + sum(currentFrame.rolls);
+  currentFrame.score = (lastFrame.score || 0) + sum(currentFrame.rolls);
   return [...frames, currentFrame];
 };
 
