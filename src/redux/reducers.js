@@ -47,8 +47,6 @@ const game = (state = initialState, action) => {
     };
   }
   if (action.type === RESET) {
-    console.log(state.playersList);
-    console.log({ ...state });
     return getInitialState(state.playersList);
   }
   if (action.type === SET_PLAYERS) {
