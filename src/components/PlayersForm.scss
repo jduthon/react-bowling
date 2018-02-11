@@ -12,6 +12,11 @@
 }
 
 .players-form__field {
+  display: flex;
+  align-items: center;
+}
+
+.players-form__input {
   border: solid 1px;
   color: $light-color;
   background-color: lighten($dark-color, 10);
@@ -19,6 +24,7 @@
   padding: 8px;
   font-size: 16px;
   @include neon-effect();
+  margin-right: 10px;
 }
 
 .players-form__submit {

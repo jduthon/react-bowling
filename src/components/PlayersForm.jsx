@@ -33,6 +33,14 @@ class PlayersForm extends React.Component {
     e.preventDefault();
   };
 
+  handleDelete = index => e => {
+    const { players } = this.state;
+    if (players.length > 1) {
+      this.setState({ players: players.filter((_, i) => index !== i) });
+    }
+    e.preventDefault();
+  };
+
   handleSubmit = () => {
     const { setPlayers } = this.props;
     const { players } = this.state;
@@ -44,13 +52,20 @@ class PlayersForm extends React.Component {
     return (
       <form className="players-form" onSubmit={this.handleSubmit}>
         {players.map((name, i) => (
-          <input
-            type="text"
-            className="players-form__field"
-            value={name}
-            onChange={this.handleChange(i)}
-            key={i}
-          />
+          <div key={i} className="players-form__field">
+            <input
+              type="text"
+              className="players-form__input"
+              value={name}
+              onChange={this.handleChange(i)}
+            />
+            <button
+              className="neon-button players-form__delete"
+              onClick={this.handleDelete(i)}
+            >
+              -
+            </button>
+          </div>
         ))}
         <button
           className="neon-button players-form__add"
