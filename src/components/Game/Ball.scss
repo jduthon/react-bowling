@@ -1,0 +1,77 @@
+@import '../vars.scss';
+
+.ball {
+  position: relative;
+  height: 60px;
+  width: 60px;
+  border-radius: 100%;
+  overflow: hidden;
+  border: none;
+  outline: 0;
+}
+
+.ball--disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.ball--rolling {
+  animation-name: roll_ball;
+  animation-timing-function: ease-in;
+}
+
+@keyframes roll_ball {
+  to {
+    transform: scale(0.8) translateY(-400px);
+  }
+}
+
+@mixin texture-pattern($bg-color, $dot-color, $dot-space, $dot-size) {
+  background: linear-gradient(
+        90deg,
+        $bg-color ($dot-space - $dot-size),
+        transparent 1%
+      )
+      center,
+    linear-gradient($bg-color ($dot-space - $dot-size), transparent 1%) center,
+    $dot-color;
+  background-size: $dot-space $dot-space;
+}
+
+.ball--rolling:before {
+  animation: 1s linear infinite animate_pattern;
+}
+
+.ball:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 300%;
+  width: 500%;
+  @include texture-pattern($dark-color, $light-color, 2px, 1px);
+}
+
+@keyframes animate_pattern {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(-50%, -30%);
+  }
+}
+
+.ball:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at 38% 20%,
+    white 0%,
+    rgba(255, 255, 255, 0.6) 10%,
+    rgba(0, 0, 0, 0.9) 80%
+  );
+}

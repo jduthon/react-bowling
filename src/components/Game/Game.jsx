@@ -17,8 +17,8 @@ import {
 
 import { gamePropTypes, framePropTypes } from './propTypes';
 import ScoreRow from './ScoreRow';
-import RandomButton from './RandomButton';
 import Lane from './Lane';
+import Ball from './Ball';
 
 import './Game.css';
 
@@ -33,6 +33,11 @@ class Game extends React.Component {
     currentFrame: framePropTypes.isRequired,
     playerName: PropTypes.string.isRequired,
     roll: PropTypes.func.isRequired,
+    rollDuration: PropTypes.number,
+  };
+
+  static defaultProps = {
+    rollDuration: 500,
   };
 
   constructor(props) {
@@ -75,8 +80,12 @@ class Game extends React.Component {
   }
 
   handleRoll = pinsKnocked => {
-    const { roll } = this.props;
-    roll(pinsKnocked);
+    const { roll, rollDuration } = this.props;
+    this.setState({ rolling: true });
+    window.setTimeout(() => {
+      roll(pinsKnocked);
+      this.setState({ rolling: false });
+    }, rollDuration);
   };
 
   render() {
@@ -85,14 +94,18 @@ class Game extends React.Component {
       playerName,
       currentFrame,
       processing,
+      rolling,
     } = this.state;
+    const { rollDuration } = this.props;
     const pinsNumber = 10 - sum(currentFrame.rolls);
     return (
       <div className="game">
         <ScoreRow frames={framesWithEmpty(frames)} playerName={playerName} />
         <Lane pinsNumber={pinsNumber} />
         <div className="throw-area">
-          <RandomButton
+          <Ball
+            rolling={rolling}
+            rollDuration={rollDuration}
             pinsNumber={pinsNumber}
             disabled={end || processing}
             onClick={this.handleRoll}

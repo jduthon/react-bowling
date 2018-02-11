@@ -6,9 +6,9 @@ import { omitKeys } from '../../utils/object';
 
 import { getRandomRoll } from '../../cpu';
 
-import './RandomButton.css';
+import './Ball.css';
 
-class RandomButton extends React.Component {
+class Ball extends React.Component {
   randomRoll = () => {
     const { pinsNumber, disabled, onClick } = this.props;
     if (!disabled) {
@@ -17,29 +17,32 @@ class RandomButton extends React.Component {
   };
 
   render() {
-    const { disabled } = this.props;
+    const { disabled, rolling, rollDuration, ...btnProps } = this.props;
     return (
       <button
-        className={cx('neon-button', 'random-button', {
-          'random-button--disabled': disabled,
+        className={cx('ball', {
+          'ball--rolling': rolling,
+          'ball--disabled': disabled,
         })}
-        {...omitKeys(this.props, ['pinsNumber'])}
+        style={{ animationDuration: `${rollDuration / 1000}s` }}
+        {...omitKeys(btnProps, ['pinsNumber', 'onClick'])}
         onClick={this.randomRoll}
-      >
-        Roll!
-      </button>
+      />
     );
   }
 }
 
-RandomButton.propTypes = {
+Ball.propTypes = {
   onClick: PropTypes.func.isRequired,
   pinsNumber: PropTypes.number.isRequired,
+  rollDuration: PropTypes.number.isRequired,
   disabled: PropTypes.bool,
+  rolling: PropTypes.bool,
 };
 
-RandomButton.defaultProps = {
+Ball.defaultProps = {
   disabled: false,
+  rolling: false,
 };
 
-export default RandomButton;
+export default Ball;
