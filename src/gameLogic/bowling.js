@@ -19,6 +19,15 @@ export const roll = (previousFrames, roll) => {
   const lastIsSpare = frameIsSpare(lastFrame);
   const isDoubleScore =
     lastIsStrike || (lastIsSpare && frameIsEmpty(currentFrame));
+  currentFrame.rolls.push(roll);
+  if (frames.length > 10) {
+    frames[9].score += roll;
+    frames.push(currentFrame);
+    return [
+      ...frames.slice(0, 9),
+      ...frames.slice(9).map(f => ({ ...f, score: frames[9].score })),
+    ];
+  }
   if (isDoubleScore) {
     if (lastIsStrike) {
       const lastLastFrame = frames[frames.length - 2] || getEmptyFrame();
@@ -29,12 +38,26 @@ export const roll = (previousFrames, roll) => {
     }
     lastFrame.score += roll;
   }
-  currentFrame.rolls.push(roll);
-  currentFrame.score = (lastFrame.score || 0) + sum(currentFrame.rolls);
+  currentFrame.score =
+    (lastFrame.score || 0) +
+    (frames.length === 10 ? 0 : sum(currentFrame.rolls));
   return [...frames, currentFrame];
 };
 
 export const isGameEnd = frames => {
-  const lastFrame = last(frames);
-  return frames.length === 10 && frameIsFull(lastFrame);
+  if (frames.length >= 10) {
+    const lastFrame = frames[9];
+    if (frameIsStrike(lastFrame)) {
+      return (
+        frames.length > 11 &&
+        ((frameIsStrike(frames[10]) && frames.length === 12) ||
+          frameIsFull(frames[10]))
+      );
+    }
+    if (frameIsSpare(lastFrame)) {
+      return frames.length === 11;
+    }
+    return frameIsFull(lastFrame);
+  }
+  return false;
 };

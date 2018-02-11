@@ -24,7 +24,7 @@ import './Game.css';
 
 const framesWithEmpty = frames => [
   ...frames,
-  ...new Array(10 - frames.length).fill(getEmptyFrame()),
+  ...new Array(10 - Math.min(frames.length, 10)).fill(getEmptyFrame()),
 ];
 
 class Game extends React.Component {
