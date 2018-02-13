@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { last } from '../utils/array';
 import { roll, isGameEnd } from '../gameLogic/bowling';
 import { frameIsFull } from '../gameLogic/frame';
+import { getNextPlayerIndex } from '../gameLogic/players';
 import { ROLL, RESET, SET_PLAYERS } from './actions';
 
 const getInitialState = playersList => ({
@@ -38,7 +39,7 @@ const game = (state = initialState, action) => {
       return {
         ...state,
         playersGame,
-        currentPlayerIndex: (currentPlayerIndex + 1) % playersGame.length,
+        currentPlayerIndex: getNextPlayerIndex(state),
       };
     }
     return {
